@@ -2,6 +2,7 @@
 <div>
   <h1>
     Bonjour Joel, Bienvenu sur votre compte {{ user.name }}
+    <NuxtLink to="/"> go to home</NuxtLink>
   </h1>
 </div>
 </template>
@@ -24,11 +25,12 @@ export default {
       this.$getMe(jwtDecoded.id, token)
         .then(res=>res.json()).then((data)=>{
           this.$store.commit('isAuth')
-          console.log( data )
+          this.$store.commit('setUserName',data.name)
           this.user = data;
-        this.isLogged = true;
-          console.log( data )
-          console.log( this.$store.state.auth)
+          this.isLogged = true;
+          localStorage.setItem("Name",data.name)
+
+          console.log( this.$store.state.userName)
       }).catch(err=>{
         console.log( err )
       })

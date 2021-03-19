@@ -1,5 +1,6 @@
 export const state = () => ({
     auth: false,
+    userName:"",
 })
 
 export const mutations = {
@@ -7,6 +8,9 @@ export const mutations = {
         state.auth = true;
     },
     loggedOut(state) {
-        state.auth = false
-    }
+        state.auth = false;
+    },
+  setUserName(state,{UserName}){
+      state.userName=UserName;
+  }
 }
