@@ -1,5 +1,5 @@
 <template>
-<div class="container__register h-8">
+<div class="container__register h-8" v-if="display">
   <span class="font-hairline pl-8">Faites de chaque achats une récompense</span>
   <ul class="nav__wrapper pr-6">
 
@@ -36,7 +36,16 @@
 
 <script>
 export default {
-name: "registerbar"
+name: "registerbar",
+  data:function (){
+  return{
+    display:true
+  }
+  },
+  created() {
+    //this.display = this.$store.state.auth ? false : true
+    console.warn( this.$store.state.auth )
+  }
 }
 </script>
 

@@ -29,8 +29,12 @@
 
 <script>
 export default {
+fetch(){
+  console.log( this.$store.state.auth )
+}
 }
 </script>
+
 
 <style>
 /* Sample `apply` at-rules with Tailwind CSS
