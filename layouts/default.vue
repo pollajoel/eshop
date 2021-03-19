@@ -1,6 +1,8 @@
 <template>
   <div>
+    <Header/>
     <Nuxt />
+    <Footer/>
   </div>
 </template>
 
@@ -60,3 +62,10 @@ html {
   background-color: #35495e;
 }
 </style>
+<script>
+import Header from "@/components/ui/header";
+import Footer from "@/components/ui/footer";
+export default {
+  components: {Footer, Header}
+}
+</script>

@@ -3,7 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">
-        eshop
+        ynov-eshop
       </h1>
       <div class="links">
         <a
@@ -28,7 +28,8 @@
 </template>
 
 <script>
-export default {}
+export default {
+}
 </script>
 
 <style>
@@ -45,7 +46,6 @@ export default {}
   align-items: center;
   text-align: center;
 }
-
 .title {
   font-family:
     'Quicksand',
@@ -63,7 +63,6 @@ export default {}
   color: #35495e;
   letter-spacing: 1px;
 }
-
 .subtitle {
   font-weight: 300;
   font-size: 42px;
@@ -71,7 +70,6 @@ export default {}
   word-spacing: 5px;
   padding-bottom: 15px;
 }
-
 .links {
   padding-top: 15px;
 }
