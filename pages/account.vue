@@ -27,10 +27,11 @@ export default {
           this.$store.commit('isAuth')
           this.$store.commit('setUserName',data.name)
           this.user = data;
+          console.log( data )
           this.isLogged = true;
-          localStorage.setItem("Name",data.name)
+          localStorage.setItem("name",data.name)
 
-          console.log( this.$store.state.userName)
+
       }).catch(err=>{
         console.log( err )
       })

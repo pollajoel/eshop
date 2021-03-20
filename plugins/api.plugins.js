@@ -14,6 +14,14 @@ export default ({ app }, inject) => {
             "Authorization":token
           }
        })
+     }),
+
+     inject('register',(body)=>{
+       return fetch(`${process.env.API_URL}/register/`,{
+         headers:{"Content-type":"Application/json"},
+         method:"POST",
+         body:JSON.stringify(body)}
+       )
      })
 
 

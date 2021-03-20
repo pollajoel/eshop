@@ -56,7 +56,7 @@ name: "dropdown",
   },
   fetch(){
   this.display = this.$store.state.auth;
-  this.userName =  localStorage.getItem("Name");
+  this.userName =  localStorage.getItem("name");
   }
 }
 </script>
