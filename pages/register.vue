@@ -10,7 +10,7 @@
                     </div>
                 </div>
               <form>
-                 <ErrorAlerte :errormessage="displayError" v-if="displayError" />
+
                 <div id="converters-area" class="px-4 py-5">
                     <div class="flex flex-col ">
                         <div class="flex items-center justify-between mb-5">
@@ -64,7 +64,7 @@
                             </div>
                             <div class="flex flex-col text-left w-3/6 px-2">
                                 <label class="mb-1 mb-1 text-sm font-medium text-gray-700" for="height-feet">Confirmaton de mot de passe</label>
-                                <input type="password" class="py-3 px-5 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" name ="confirmpassword" v-model="confirmpassword"/>
+                                <input type="password" class="py-3 px-5 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" name ="confirmpassWord" v-model="confirmpassWord"/>
                             </div>
                         </div>
 
@@ -78,6 +78,7 @@
                     </div>
                 </div>
                  <succesArlete :successmessage="successmessage" v-if="successmessage"/>
+                <ErrorAlerte :errormessage="displayError" v-if="displayError" />
               </form>
             </div>
         </div>
@@ -124,7 +125,7 @@ name: "register",
       city:this.city,
       country:this.country,
       ZipCode:this.ZipCode,
-      adresse:this.adresseFi
+      adressei:this.adresseFi
     })
 
     const body={
@@ -138,18 +139,19 @@ name: "register",
       isAdmin:true,
     }
 
-    if( !this.passWord || !this.email || !this.confirmpassword || !this.firstName || !this.name)
+    if( !this.passWord || !this.email || !this.confirmpassWord || !this.firstName || !this.name)
     this.displayError="Veuillez renseigner les champs obligatoires"
-    else
-      this.$register(body).then(res=>res.json()).
-      then(data=> {
+    else {
+      this.$register(body).then(res => res.json()).then(data => {
           console.log(data)
           this.successmessage = "Votre compte a été créé avec succès..."
+          this.errorMessage = ""
 
         }
-      ).catch(err=>{
-      console.log(err)
+      ).catch(err => {
+        console.log(err)
       })
+    }
   },
 
   }

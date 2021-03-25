@@ -1,5 +1,5 @@
 <template>
-<div class="alert__success">
+<div class="alert__success" v-show="isDiplay">
   <div class="mt-4"></div>
   <div class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-md text-green-700 bg-green-100 border border-green-300 ">
     <div slot="avatar">
@@ -12,7 +12,7 @@
       {{ successmessage }}</div>
     <div class="flex flex-auto flex-row-reverse">
       <div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-green-400 rounded-full w-5 h-5 ml-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-green-400 rounded-full w-5 h-5 ml-2" @click="isDiplay=false">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -30,7 +30,10 @@ name: "succesArlete",
     type:String,
     required:true,
   }
-  }
+  },
+  data:function (){
+    return{isDiplay:true}
+    }
 }
 </script>
 

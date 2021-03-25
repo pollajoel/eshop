@@ -39,14 +39,23 @@ name: "LoginForm",
         passWord:this.password,
         email:this.login
       }
+
+
       if( !this.password || !this.login)
         this.errorMessage="login et mot de passe requis"
       else {
         this.$login(body).then(res => res.json()).then((data) => {
-          this.$store.commit('isAuth')
-          let token = data.accessToken;
-          localStorage.setItem('token',token);
-           this.$router.push("account")
+
+          if( Object.keys(data).length === 0 && data.constructor === Object)
+            this.errorMessage="error de login ou de mot de passe..."
+          else {
+            let token = data.accessToken;
+            //console.log(data)
+            localStorage.setItem('token', token);
+            this.$store.commit('isAuth')
+            this.$router.push("account")
+          }
+
         }).catch(err => {
           console.log(err)
         })

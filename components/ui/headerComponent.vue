@@ -20,7 +20,7 @@
 import Dropdown from "@/components/ui/dropdown";
 import Registerbar from "@/components/ui/registerbar";
 export default {
-name: "header",
+name: "headerComponent",
   components: {Registerbar, Dropdown}
 }
 </script>

@@ -10,7 +10,7 @@
 
 import Footermenu from "@/components/ui/footermenu";
 export default {
-  name: "footer",
+  name: "footerComponent",
   components: {Footermenu}
 }
 </script>

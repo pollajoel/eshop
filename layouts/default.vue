@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header/>
+    <headerComponent/>
     <Nuxt />
     <Footer/>
   </div>
@@ -63,9 +63,9 @@ html {
 }
 </style>
 <script>
-import Header from "@/components/ui/header";
-import Footer from "@/components/ui/footer";
+import headerComponent from "@/components/ui/headerComponent";
+import Footer from "@/components/ui/footerComponent";
 export default {
-  components: {Footer, Header}
+  components: {Footer, headerComponent}
 }
 </script>
