@@ -1,10 +1,5 @@
 <template>
-<div class="page__categories">
-  <AdminBar/>
-  <div class="page__contain">
     <CategoriesLayout/>
-  </div>
-</div>
 </template>
 
 <script>

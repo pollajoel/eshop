@@ -16,6 +16,13 @@ export default ({ app }, inject) => {
           }
        })
      }),
+     inject('getUsers',(token)=>{
+       return fetch(`${process.env.API_URL}/users`,{
+          headers: {
+            "Authorization":token
+          }
+       })
+     }),
 
      inject('register',(body)=>{
        return fetch(`${process.env.API_URL}/register/`,{
@@ -36,7 +43,6 @@ export default ({ app }, inject) => {
        })
      }),
      inject('addCategorie',(body)=>{
-       console.log( body )
        return fetch(`${process.env.API_URL}/addcategorie`,{
          headers:{"Content-type":"Application/json"},
          method:"POST",
@@ -44,12 +50,65 @@ export default ({ app }, inject) => {
        )
      }),
      inject('deleteCategorie',(cat,token)=>{
-       console.log( cat )
+
        return fetch(`${process.env.API_URL}/deleteCat/`,{
          headers:{"Content-type":"Application/json"},
          method:"POST",
          body:JSON.stringify(cat)
        })
+     }),
+     inject('Addproduct',(product,token)=>{
+
+       return fetch(`${process.env.API_URL}/addProduct`,{
+         headers: {
+            "Authorization":token,
+           "Content-type":"Application/json"
+          },
+         method:"POST",
+         body:JSON.stringify(product)
+       })
+     }),//products plugins
+
+  inject('Addproducts',(user,token)=>{
+       return fetch(`${process.env.API_URL}/userDelete`,{
+         headers: {
+            "Authorization":token,
+           "Content-type":"Application/json"
+          },
+         method:"POST",
+         body:JSON.stringify(user)
+       })
+     }),
+     inject('products',()=>{
+       return fetch(`${process.env.API_URL}/productList`,{
+         headers: {
+           "Content-type":"Application/json"
+          },
+         method:"GET",
+       })
+     }),
+     //plugin to upload file
+     inject('upload',(fileInput,fileName)=>{
+       console.log( fileInput )
+
+       var formdata = new FormData();
+       formdata.append("file", fileInput[0], fileName);
+       var myHeaders = new Headers();
+
+       return fetch(`${process.env.API_URL}/upload`,{
+         headers: myHeaders,
+         method:"POST",
+         body:formdata
+       })
+     }),
+     inject('productdeleted',(product,token)=>{
+
+       return fetch(`${process.env.API_URL}/productdeleted`,{
+         headers:{"Content-type":"Application/json"},
+         method:"POST",
+         body:JSON.stringify(product)
+       })
      })
+
 
 }

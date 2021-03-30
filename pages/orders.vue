@@ -1,19 +1,14 @@
 <template>
-<div class="order__account">
-  <AdminBar/>
-  <div class="order__contain">
-     <ordersComponent/>
-  </div>
-
-</div>
+<AdminOdersComponent/>
 </template>
 
 <script>
 import AdminBar from "@/components/ui/AdminBar";
 import ordersComponent from "@/components/ui/ordersComponent";
+import AdminOdersComponent from "@/components/ui/orders/adminOdersComponent";
 export default {
 name: "orders",
-  components: {AdminBar,ordersComponent}
+  components: {AdminOdersComponent, AdminBar,ordersComponent}
 }
 </script>
 
