@@ -27,7 +27,6 @@ export default {
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
@@ -43,5 +42,6 @@ export default {
   },
   env:{
     API_URL: process.env.API_URL,
+    SENDING_BLUE_API_KEY:process.env.SENDING_BLUE_API_KEY,
   }
 }

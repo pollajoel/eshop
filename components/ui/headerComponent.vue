@@ -7,7 +7,7 @@
           <li class="nav__item"><NuxtLink to="/" class="nav__link">Home</NuxtLink></li>
           <li class="nav__item"><NuxtLink to="/shop">e-shop</NuxtLink></li>
           <li class="nav__item"><NuxtLink to="/contact">Contact</NuxtLink></li>
-          <li class="nav__item"><NuxtLink to="/contact">Panier</NuxtLink></li>
+          <li class="nav__item"><NuxtLink to="/cart">Panier</NuxtLink></li>
           <li class="nav__divider"></li>
           <li><Dropdown/></li><!-- display when the user is login -->
         </ul>

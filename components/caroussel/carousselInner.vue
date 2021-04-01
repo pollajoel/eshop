@@ -1,39 +1,36 @@
 <template>
-  <div style="display: flex">
-    <div class="w-2/4">
-      <img class="w-full slider_height"
-           :src="imgurl">
+  <!-- component -->
+<div class="py-6">
+  <div class="flex w-full slider_height bg-white shadow-lg rounded-lg overflow-hidden ">
+    <div class="w-1/2 bg-cover" :style="{'background-image': 'url('+imgurl+')'}">
     </div>
-    <div class="w-2/4 border ">
-      <h1 class="text-5xl pt-20">title</h1>
-      <div class="description__contain" style="display: flex;flex-direction:column">
-        <div class="description__text">
-          <p>Lorem ipsum Lorem ipsum</p>
-        </div>
-        <div class="description__text">
-          <h1>14Euros</h1>
-        </div>
-        <div class="action__button" style="display: flex">
-                 <span>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                        style="height: 56px;">
-                     <path fill-rule="evenodd"
-                           d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                           clip-rule="evenodd"/>
-                   </svg>
-                 </span>
-          <span>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                        style="height: 56px;">
-                     <path fill-rule="evenodd"
-                           d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                           clip-rule="evenodd"/>
-                   </svg>
-                 </span>
-        </div>
+    <div class="w-1/2 p-4 pt-20">
+      <h1 class="text-gray-900 font-bold text-2xl">{{ name }}</h1>
+      <p class="mt-2 text-gray-600 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem fuga id nam quia</p>
+      <div class="flex item-center mt-2">
+        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+        </svg>
+        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+        </svg>
+        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+        </svg>
+        <svg class="w-5 h-5 fill-current text-gray-500" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+        </svg>
+        <svg class="w-5 h-5 fill-current text-gray-500" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+        </svg>
+      </div>
+      <div class="flex item-center justify-between mt-3">
+        <h1 class="text-gray-700 font-bold text-xl">$220</h1>
+        <button class="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Add to Card</button>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -43,6 +40,9 @@ export default {
     imgurl: {
       type: String,
       default:'https://cdn.pixabay.com/photo/2021/03/22/13/48/anemone-6114655_960_720.jpg'
+    },
+    name:{
+      type:String
     }
     }
 
@@ -50,8 +50,8 @@ export default {
 </script>
 
 <style scoped>
-slider_height{
-  height: 520px
+.slider_height{
+  height:500px;
 }
 
 </style>

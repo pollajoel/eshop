@@ -39,7 +39,7 @@
                   <th class="text-left p-3 px-5">catégorie</th>
                   <th></th>
                 </tr>
-                <tr class="border-b hover:bg-orange-100 bg-gray-100" v-for="product in products" :key="product._id">
+                <tr class="border-b hover:bg-orange-100 bg-gray-100 " v-for="product in products" :key="product._id">
                     <td class="p-3 px-5"><input type="text" value="user.name" class="bg-transparent" v-model="product.name"></td>
                     <td class="p-3 px-5"><input type="text" value="user.email" class="bg-transparent" v-model="product.description"></td>
                     <td class="p-3 px-5"><input type="text" value="user.email" class="bg-transparent" v-model="product.price"></td>

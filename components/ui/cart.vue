@@ -4,7 +4,7 @@
     <div class="flex shadow-md my-10">
       <div class="w-3/4 bg-white px-10 py-10">
         <div class="flex justify-between border-b pb-8">
-          <h1 class="font-semibold text-2xl">Shopping Cart</h1>
+          <h1 class="font-semibold text-2xl">votre panier</h1>
           <h2 class="font-semibold text-2xl">3 Items</h2>
         </div>
         <div class="flex mt-10 mb-5">
@@ -13,7 +13,9 @@
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
         </div>
-        <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+
+
+        <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5" v-for="product in productCart" :key="product._id">
           <div class="flex w-2/5"> <!-- product -->
             <div class="w-20">
               <img class="h-24" src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z" alt="">
@@ -129,7 +131,19 @@
 
 <script>
 export default {
-  name: "cart"
+  name: "cart",
+  mounted() {
+    alert( "bonjour ooh! aah! aah!");
+    const productCart = JSON.parse(localStorage.getItem("cart"));
+
+    this.productCart = productCart;
+   alert( "bonjour");
+  },
+  data:function(){
+    return{
+      productCart:[]
+    }
+  }
 }
 </script>
 
