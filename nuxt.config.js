@@ -36,7 +36,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
-  serverMiddleware:['~/api/send-email.js','~/api/stripe-payment.js','~/api/sendinblue.js'],
+  serverMiddleware:['~/api/stripe-payment.js','~/api/sendinblue.js'],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   apollo: {
     clientConfigs: {
