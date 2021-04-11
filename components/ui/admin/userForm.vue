@@ -2,6 +2,7 @@
 <!-- component -->
     <div class="bg-gray-200 min-h-screen pt-2 font-mono my-16">
         <div class="container mx-auto">
+
             <div class="inputs w-full max-w-2xl p-6 mx-auto">
                 <h2 class="text-2xl text-gray-900">Modifier le compte</h2>
                 <form class="mt-6 border-t border-gray-400 pt-4">
@@ -48,6 +49,7 @@
                             </div>
                         </div>
                         -->
+
                         <div class="personal w-full border-t border-gray-400 pt-4">
                             <h2 class="text-2xl text-gray-900">Informations personnelles:</h2>
                             <div class="flex items-center justify-between mt-4">
@@ -94,8 +96,11 @@
                             </div>
                             -->
                             <div class="flex justify-end">
-                                <button class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3" type="submit">Enregister les modifications</button>
+                                <button class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3" type="submit" @click.prevent="submitdata">Enregister les modifications</button>
                             </div>
+                          <div>
+                            <succes-arlete successmessage="informations utilisateurs mis à jours..." v-show="state"/>
+                          </div>
                         </div>
                     </div>
                 </form>
@@ -106,8 +111,11 @@
 </template>
 
 <script>
+import SuccesArlete from "@/components/ui/succesArlete";
 export default {
 name: "userForm",
+  components: {SuccesArlete},
+  middleware:"auth",
   props:{
   user:{
     name :{type:String,},
@@ -124,7 +132,8 @@ name: "userForm",
 },
   data:function (){
   return{
-    showPassword:false
+    showPassword:false,
+    state:false,
   }
   },
   methods:{
@@ -133,7 +142,41 @@ name: "userForm",
       this.showPassword=false;
     else
       this.showPassword=true;
-  }
+  },
+    submitdata(){
+    this.state=false;
+    let userAdress = []
+      userAdress.push({
+        city:this.user.city,
+        country:this.user.country,
+        ZipCode:this.user.ZipCode,
+        adressei:this.user.adresseFi
+      })
+
+      const body={
+        name:this.user.name,
+        firstName:this.user.firstName,
+        passWord:this.user.passWord,
+        email:this.user.email,
+        adresse:this.userAdress,
+        phoneNumber:this.user.phoneNumber,
+        civility:this.user.civility,
+        isAdmin:true,
+      }
+
+      let token = localStorage.getItem("token")
+      this.$updateuser(this.user._id,body,token).then(res=>res.json()).then(data=>{
+        console.log( data )
+        //this.email = data.res.email;
+        if( data )
+          this.state = data.status;
+        //this.$fetch();
+      }).catch(err=>{
+        console.log( err );
+      })
+
+
+  },
   }
 
 }

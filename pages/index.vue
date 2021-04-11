@@ -1,9 +1,7 @@
 <template>
     <div>
 
-
      <Caroussel>
-
        <caroussel-slide class="pl-32 pr-32" >
          <caroussel-inner imgurl="https://cdn.pixabay.com/photo/2014/05/18/11/25/pizza-346985_960_720.jpg"></caroussel-inner>
        </caroussel-slide>
@@ -24,17 +22,6 @@
           <popular-product/>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
       </div>

@@ -4,11 +4,11 @@
   <div class="account__contain">
    <div class="py-3 px-5 mb-4 text-gray-900 rounded-md text-sm">
      <ul class="flex">
-       <li><a href="#" class="underline font-semibold">Home</a></li>
+       <li><a href="#" class="underline font-semibold">Accueil</a></li>
        <li><span class="mx-2">/</span></li>
        <li><a href="#" class="underline font-semibold">Pages</a></li>
        <li><span class="mx-2">/</span></li>
-       <li>Sample page</li>
+       <li>Utilisateur</li>
      </ul>
    </div>
 
@@ -76,37 +76,30 @@
 
                         <div class="flex items-center justify-center mt-3">
                             <div class="flex flex-col text-center w-2/3 px-2">
-                                <button class="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" @click.prevent="register">
+                                <button class="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" @click.prevent="update">
                                    Valider mes informations
                                  </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                 <succesArlete :successmessage="successmessage" v-if="successmessage"/>
+                 <succesArlete :successmessage="successmessage" v-if="state"/>
                 <ErrorAlerte :errormessage="displayError" v-if="displayError" />
               </form>
             </div>
         </div>
     </div>
-
-
-
-
-
-
   </div>
-
-
 </div>
 </template>
 
 <script>
 import AdminBar from "@/components/ui/AdminBar";
 import Dropdown from "@/components/ui/dropdown";
+import SuccesArlete from "@/components/ui/succesArlete";
 export default {
   name: "account",
-  components: {Dropdown, AdminBar},
+  components: {Dropdown, AdminBar,SuccesArlete},
   middleware:"auth",
   layout:"adminLayout",
   data:function (){
@@ -126,20 +119,51 @@ export default {
       firstName: "",
       confirmpassWord:"",
       displayError:"",
-      successmessage:"",
-      userId:""
+      successmessage:"vos données ont été mis à jour avec success",
+      userId:"",
+      state:false
     }
   },
-methods:{
+  methods:{
     update:function (){
-      alert( "update....")
+      this.state = false;
+      let userAdress = []
+      userAdress.push({
+        city:this.city,
+        country:this.country,
+        ZipCode:this.ZipCode,
+        adressei:this.adresseFi
+      })
+
+      const body={
+        name:this.name,
+        firstName:this.firstName,
+        passWord:this.passWord,
+        email:this.email,
+        adresse:userAdress,
+        phoneNumber:this.phoneNumber,
+        civility:this.civility,
+        isAdmin:true,
+      }
+
+      let token = localStorage.getItem("token")
+      this.$updateuser(this.userId,body,token).then(res=>res.json()).then(data=>{
+        console.log( data )
+        //this.email = data.res.email;
+        if( data )
+          this.state = data.status;
+        //this.$fetch();
+      }).catch(err=>{
+        console.log( err );
+      })
+
     }
-}
-,
-  fetch() {
+  },
+  mounted() {
     const token = localStorage.getItem("token")
     if( token ) {
       const jwtDecoded = this.$decodeJwt(token);
+      console.log( jwtDecoded );
       this.$getMe(jwtDecoded.id, token)
         .then(res=>res.json()).then((data)=>{
           this.$store.commit('isAuth')
@@ -158,6 +182,8 @@ methods:{
          this.confirmpassWord = data.passWord;
          this.email= data.email;
          this.phoneNumber = data.phoneNumber;
+         this.userId = data._id;
+
 
 
 

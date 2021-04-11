@@ -12,7 +12,7 @@
          <tbody>
           <tr class="border-b hover:bg-orange-100 bg-gray-100">
             <td class="p-3 px-5"><input type="text" placeholder="titre" v-model="product.name"></td>
-            <td class="p-3 px-5"><input type="text" placeholder="description" v-model="product.description"></td>
+            <td class="p-3 px-5"> <textarea class="w-full h-24 p-2 bg-transparent rounded" name="description" v-model="product.description" placeholder="description de votre produit"></textarea></td>
             <td class="p-3 px-5"><input type="number" min="1" placeholder="prix hors taxe" v-model="product.price"></td>
             <td class="p-3 px-5">
               <select value="user.role" class="bg-transparent rounded-md border-2" v-model="product.categorie">
@@ -21,12 +21,14 @@
               </select>
             </td>
             <td class="p-3 px-5"><input type="file"  accept="image/jpeg, image/png" v-on:change="AddImage" v-bind="productImage" name="productImage(event)" required></td>
-            <td class="p-3 px-5 flex justify-end"><button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click.prevent="AddProduct">Ajouter un produit</button></td>
+            <td class="p-3 px-5 flex justify-end"><button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click.prevent="AddProduct">Ajouter</button></td>
           </tr>
          </tbody>
        </table>
-
 </div>
+  <div>
+    <succes-arlete successmessage="produit mis à jour avec succès ..." v-if="state"/>
+  </div>
 
     <div class="px-3 py-4 flex justify-center">
         <table class="w-full text-md bg-white shadow-md rounded mb-4">
@@ -40,9 +42,10 @@
                   <th></th>
                 </tr>
                 <tr class="border-b hover:bg-orange-100 bg-gray-100 " v-for="product in products" :key="product._id">
-                    <td class="p-3 px-5"><input type="text" value="user.name" class="bg-transparent" v-model="product.name"></td>
-                    <td class="p-3 px-5"><input type="text" value="user.email" class="bg-transparent" v-model="product.description"></td>
-                    <td class="p-3 px-5"><input type="text" value="user.email" class="bg-transparent" v-model="product.price"></td>
+                    <td class="p-3 px-5"><input type="text" name="name" class="bg-transparent" v-model="product.name"></td>
+                    <td class="p-3 px-5">
+                      <textarea class="w-full h-24 p-2 bg-transparent rounded" name="description" v-model="product.description"></textarea>
+                    <td class="p-3 px-5"><input type="text" name="price" class="bg-transparent" v-model="product.price">€</td>
                     <td class="p-3 px-5"><img class="bg-transparent h-10" :src="product.imgurl.url"></td>
                     <td class="p-3 px-5">
                         <select value="user.role" class="bg-transparent border rounded-md">
@@ -52,7 +55,7 @@
                             </option>
                         </select>
                     </td>
-                    <td class="p-3 px-5 flex justify-end"><button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Enreg</button><button type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click.prevent="deleted(product)">Suppr</button></td>
+                    <td class="p-3 px-5 flex justify-end"><button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click="ProductUpdate(product)">Enreg</button><button type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click.prevent="deleted(product)">Suppr</button></td>
                 </tr>
             </tbody>
         </table>
@@ -63,16 +66,19 @@
 <script>
 import ErrorAlerte from "@/components/ui/errorAlerte";
 import products from "@/pages/products";
+import SuccesArlete from "@/components/ui/succesArlete";
 export default {
   name: "productsComponent",
-  components: {ErrorAlerte},
+  components: {SuccesArlete, ErrorAlerte},
+  middleware:"auth",
   data: function () {
     return{
       categories:[],
       product:{name:'',description:'',categorie:'',image:'',price:'',imgurl:''},
       errormessage:"",
       products:[],
-      productImage:""
+      productImage:"",
+      state:false
     }
   },
   methods:{
@@ -98,9 +104,28 @@ export default {
       })
   }
   ,
+  ProductUpdate(product){
+       let token = localStorage.getItem("token");
+       this.state = false;
+       const productToupdate = {
+          name:product.name,
+          description:product.description,
+          //categorie:product.categorie,
+          image:product.image,
+          price:product.price,
+          imgurl:product.productImage
+       }
+
+       //console.log( productToupdate )
+
+       this.$productupdate(product._id,productToupdate,token).then(res=>res.json()).then(data=>{
+         //console.log( data );
+         this.state =true;
+       }).catch(err=>{
+         console.log( err );
+       })
+  },
     AddProduct:function (){
-
-
       const product={
           name:this.product.name,
           description:this.product.description,

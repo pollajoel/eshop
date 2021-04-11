@@ -1,5 +1,6 @@
 import VueJwtDecode from "vue-jwt-decode";
 
+
 export default ({ app }, inject) => {
 
     inject('decodeJwt', (token) => {
@@ -7,3 +8,7 @@ export default ({ app }, inject) => {
     });
 
 }
+
+
+
+

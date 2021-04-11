@@ -11,9 +11,13 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "@nuxtjs/apollo": "^4.0.1-rc.5",
+    "@sendgrid/mail": "^7.4.2",
+    "@vue-stripe/vue-stripe": "^4.1.8",
     "core-js": "^3.8.3",
     "express": "^4.17.1",
     "nuxt": "^2.14.12",
+    "stripe": "^8.142.0",
     "vue-jwt-decode": "^0.1.0"
   },
   "devDependencies": {

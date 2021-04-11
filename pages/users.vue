@@ -6,6 +6,7 @@
 import AdminBar from "@/components/ui/AdminBar";
 import AdminUserComponent from "@/components/ui/admin/adminUserComponent";
 export default {
+  middleware:"auth",
   name: "users",
   components: {AdminUserComponent, AdminBar}
 }

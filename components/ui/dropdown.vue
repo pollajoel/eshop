@@ -9,14 +9,14 @@
         </svg>
       </button>
     </div>
-    <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" v-bind:style="menulogin" >
+    <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none opacite" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" v-bind:style="menulogin" >
       <div class="py-1" role="none">
         <NuxtLink to="account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Mon compte</NuxtLink>
-        <NuxtLink to="account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Mes produits</NuxtLink>
+        <NuxtLink to="products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Mes produits</NuxtLink>
         <NuxtLink to="account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Gestion des commandes</NuxtLink>
-        <NuxtLink to="account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Gestion des utilisateurs</NuxtLink>
+        <NuxtLink to="users" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Gestion des utilisateurs</NuxtLink>
         <NuxtLink to="account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Gestion des administrateurs</NuxtLink>
-        <NuxtLink to="account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Gestion des categories</NuxtLink>
+        <NuxtLink to="categories" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Gestion des categories</NuxtLink>
         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" @click="ClosedMenu">Fermer</a>
         <form method="POST" action="#" role="none">
           <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" @click="logout">
@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  middleware:"auth",
 name: "dropdown",
   data:function (){
     return{
@@ -58,7 +59,7 @@ name: "dropdown",
       localStorage.clear();
     }
   },
-  fetch(){
+  mounted(){
   this.display = this.$store.state.auth;
   this.userName =  localStorage.getItem('name')
   }
@@ -66,5 +67,8 @@ name: "dropdown",
 </script>
 
 <style scoped>
+.opacite{
+  z-index: 1;
+}
 
 </style>

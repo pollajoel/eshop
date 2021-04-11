@@ -5,8 +5,9 @@
 <script>
 import ProductsComponent from "@/components/ui/products/productsComponent";
 export default {
-  name: "products",
-  components: {ProductsComponent}
+   name: "products",
+   middleware:"auth",
+   components: {ProductsComponent}
 }
 </script>
 

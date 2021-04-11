@@ -48,6 +48,7 @@ import UserForm from "@/components/ui/admin/userForm";
 
 export default {
 name: "adminUserComponent",
+  middleware:"auth",
   components: {UserForm, ErrorAlerte,SuccesArlete},
   layout:"adminLayout",
   data:function (){
@@ -97,8 +98,8 @@ name: "adminUserComponent",
 
   },
     edit:function (user){
-    this.user = user
-        this.editState = true;
+    this.editState = true;
+    this.user =user;
     },
     deleted:function (userInput){
 

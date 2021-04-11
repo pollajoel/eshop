@@ -68,7 +68,6 @@ export default ({ app }, inject) => {
          body:JSON.stringify(product)
        })
      }),//products plugins
-
   inject('Addproducts',(user,token)=>{
        return fetch(`${process.env.API_URL}/userDelete`,{
          headers: {
@@ -89,8 +88,6 @@ export default ({ app }, inject) => {
      }),
      //plugin to upload file
      inject('upload',(fileInput,fileName)=>{
-       console.log( fileInput )
-
        var formdata = new FormData();
        formdata.append("file", fileInput[0], fileName);
        var myHeaders = new Headers();
@@ -106,6 +103,34 @@ export default ({ app }, inject) => {
        return fetch(`${process.env.API_URL}/productdeleted`,{
          headers:{"Content-type":"Application/json"},
          method:"POST",
+         body:JSON.stringify(product)
+       })
+     }),//update api link.
+     inject('deleteUser',(product,token)=>{
+
+       return fetch(`${process.env.API_URL}/userDelete`,{
+         headers:{"Content-type":"Application/json"},
+         method:"POST",
+         body:JSON.stringify(product)
+       })
+     }),//update api link.
+     inject('updateuser',(id,user,token)=>{
+       return fetch(`${process.env.API_URL}/user/${id}`,{
+         headers:{
+           "Content-type":"Application/json",
+            "Authorization":token
+         },
+         method:"PUT",
+         body:JSON.stringify(user)
+       })
+     }),
+     inject('productupdate',(id,product,token)=>{
+       return fetch(`${process.env.API_URL}/productupdate/${id}`,{
+         headers:{
+           "Content-type":"Application/json",
+            "Authorization":token
+         },
+         method:"PUT",
          body:JSON.stringify(product)
        })
      })

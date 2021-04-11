@@ -6,11 +6,12 @@
                 <p class="text-gray-700 text-xs pl-px">
                     Dernières nouvelles, articles et mises à jour mensuellement supprimés dans votre boîte de réception.
                 </p>
-                <form action="#" class="mt-2">
+                <form  class="mt-2">
                     <div class="flex items-center">
-                        <input type="email" class="w-full px-2 py-4 mr-2  bg-gray-100 shadow-inner rounded-md border border-gray-400 focus:outline-none" required>
-                        <button class="bg-blue-600 text-gray-200 px-5 py-2 rounded shadow " style="margin-left: -7.8rem;">S'abonner</button>
-                    </div>
+                        <input type="email" class="w-full px-2 py-4 mr-2  bg-gray-100 shadow-inner rounded-md border border-gray-400 focus:outline-none" name="email" v-model="email" required>
+                        <button class="bg-blue-600 text-gray-200 px-5 py-2 rounded shadow"  style="margin-left: -7.8rem;" @click.prevent="sendingBlue">S'abonner</button>
+                     </div>
+                   <p class="text-gray-700 text-xs pl-px">{{ message }}</p>
                 </form>
             </div>
         </div>
@@ -51,7 +52,44 @@
 import Footermenu from "@/components/ui/footermenu";
 export default {
   name: "footerComponent",
-  components: {Footermenu}
+  components: {Footermenu},
+  data:function (){
+    return{
+      email:"",
+      message:""
+    }
+  },
+  methods:{
+     sendingBlue:function(){
+       alert( this.email );
+      var myHeaders = new Headers();
+      myHeaders.append("api-key", process.env.SENDING_BLUE_API_KEY);
+      myHeaders.append("Content-Type", "application/json");
+      var raw = JSON.stringify({"email":this.email});
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      fetch("https://api.sendinblue.com/v3/contacts", requestOptions)
+        .then(response => response.text())
+        .then(result =>{
+          var data =JSON.parse(result);
+          console.log( data )
+          if( data.id)
+            this.message="vous avez été ajoué avec succès.."
+          else
+            this.message=data.message;
+          this.email="";
+
+        })
+
+
+        .catch(error => console.log('error', JSON.parse(error)));
+    }
+  }
 }
 </script>
 
