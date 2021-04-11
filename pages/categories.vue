@@ -6,6 +6,7 @@
 import AdminBar from "@/components/ui/AdminBar";
 import CategoriesLayout from "@/components/ui/categoriesLayout";
 export default {
+  middleware:"auth",
 name: "categories",
   components: {CategoriesLayout, AdminBar}
 }

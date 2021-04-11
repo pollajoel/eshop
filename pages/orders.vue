@@ -7,6 +7,7 @@ import AdminBar from "@/components/ui/AdminBar";
 import ordersComponent from "@/components/ui/ordersComponent";
 import AdminOdersComponent from "@/components/ui/orders/adminOdersComponent";
 export default {
+  middleware:"auth",
 name: "orders",
   components: {AdminOdersComponent, AdminBar,ordersComponent}
 }
