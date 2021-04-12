@@ -1,5 +1,5 @@
 <template>
-
+<div>
   <div class="w-full flex flex-wrap ml-12 pb-10 pt-10 justify-left">
           <div class="w-auto p-2"  v-for="product in products" :key="product._id">
             <div class="bg-white shadow-lg hover:shadow-xl rounded-lg" style="width:300px;">
@@ -32,12 +32,15 @@
             </div>
           </div>
           </div>
+</div>
 
 </template>
 
 <script>
+import SeachBar from "@/components/ui/products/seachBar";
 export default {
   name: "popularProduct",
+  components: {SeachBar},
   data:function (){
     return{
       products:[],

@@ -133,6 +133,13 @@ export default ({ app }, inject) => {
          method:"PUT",
          body:JSON.stringify(product)
        })
+     }),
+     inject('findProductBy',(description,name)=>{
+       return fetch(`${process.env.API_URL}/product/findall?description=${description}&name=${name}`,{
+          headers: {
+             "Content-type":"Application/json"
+          }
+       })
      })
 
 
