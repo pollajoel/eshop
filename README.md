@@ -2,7 +2,6 @@
 Nom et prenom : TEGUIA POLLA JOEL
 Lien prod: https://eshopteguiapollajoe.herokuapp.com/
 pour se connecter comme administrateur:
-utiliser
 les identifiants suivants:
 Login: admin@email.com
 Pass: demo
