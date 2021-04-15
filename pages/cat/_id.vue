@@ -78,9 +78,7 @@ export default {
        if( isPresent === -1) {
          favorites.push({product: product, qte: 1});
        }
-      localStorage.setItem('favorites',JSON.stringify(favorites))
-
-
+      localStorage.setItem('favorites',JSON.stringify(favorites));
     },
     addToCart: function (product) {
       var cart = [];
