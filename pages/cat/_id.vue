@@ -23,6 +23,7 @@
                 </div>
               </div>
               <div class="flex justify-center items-center px-2 pb-2">
+                <!--
                 <div class="w-1/2 p-2">
                   <button class="block w-full bg-teal-500 hover:bg-teal-600 text-white border-2 border-teal-500 hover:border-teal-600 px-3 py-2 rounded uppercase font-poppins font-medium text-xs">
                     <svg viewBox="0 0 24 24" class="inline w-4 h-4">
@@ -30,6 +31,7 @@
                     </svg> Details
                   </button>
                 </div>
+                -->
                 <div class="w-1/2 p-2">
                   <button class="block w-full bg-white hover:bg-gray-100  border-2 border-teal-500 px-3 py-2 rounded uppercase font-poppins font-medium text-xs" @click.prevent="addToCart(product)">
                     Ajouter au panier
@@ -57,6 +59,42 @@ export default {
     return{
       id:this.$route.params.id,
       products:[]
+    }
+  },
+  methods: {
+     HandleFavoris:function (product){
+      //console.log( product )
+
+
+       var favorites =[];
+
+       if( localStorage.getItem("favorites"))
+         favorites = JSON.parse(localStorage.getItem("favorites"));
+       else
+         favorites = [];
+
+      const isPresent = favorites.map(e=>e.product._id).indexOf(product._id);
+
+       if( isPresent === -1) {
+         favorites.push({product: product, qte: 1});
+       }
+      localStorage.setItem('favorites',JSON.stringify(favorites))
+
+
+    },
+    addToCart: function (product) {
+      var cart = [];
+
+      if (localStorage.getItem("cart"))
+        cart = JSON.parse(localStorage.getItem("cart"));
+      else
+        cart = []
+
+      const isPresent = cart.map(e => e.product._id).indexOf(product._id);
+
+      if (isPresent === -1)
+        cart.push({product: product, qte: 1});
+      localStorage.setItem('cart', JSON.stringify(cart))
     }
   },
 mounted(){
