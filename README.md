@@ -4,7 +4,7 @@ Lien prod: https://eshopteguiapollajoe.herokuapp.com/
 pour se connecter comme administrateur:
 utiliser
 les identifiants suivants:
-Login: admin@mail.com
+Login: admin@email.com
 Pass: demo
 
 
