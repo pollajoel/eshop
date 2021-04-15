@@ -12,6 +12,10 @@
               <form>
 
                 <div id="converters-area" class="px-4 py-5">
+                  <div v-show="$store.state.isAdmin">
+                    <input type="checkbox" name="isAdmin" v-model="isAdmin">
+                    <label class="text-red-800"> Ajouter comme Administrateur ?</label>
+                  </div>
                     <div class="flex flex-col ">
                         <div class="flex items-center justify-between mb-5">
                             <div class="flex flex-col text-left w-3/6 px-2">
@@ -52,8 +56,14 @@
                                 <input type="text" class="py-3 px-5 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" name="city" v-model="city" />
                             </div>
                             <div class="flex flex-col text-left w-3/6 px-2">
-                                <label class="mb-1 mb-1 text-sm font-medium text-gray-700" for="height-feet">pays</label>
-                                <input type="text" class="py-3 px-5 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" name ="country" v-model="country"/>
+                              <label class="mb-1 mb-1 text-sm font-medium text-gray-700" for="height-feet">pays</label>
+                              <select class="py-3 px-5 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" v-model="country">
+                                <option value=""> Selectionner un Pays</option>
+                                <option v-for="ctr in countries"
+                                        :key="ctr.name"
+                                        :value="ctr.name"
+                                >{{ ctr.name}}</option>
+                              </select>
                             </div>
                         </div>
 
@@ -92,13 +102,23 @@
 import FormGroup from "@/components/ui/FormGroup";
 import ErrorAlerte from "@/components/ui/errorAlerte";
 import SuccesArlete from "@/components/ui/succesArlete";
+import { mapMutations } from 'vuex';
+import Countries from "@/pages/countries";
+
 
 export default {
 name: "register",
-  components: {SuccesArlete, ErrorAlerte, FormGroup},
+  components: {Countries, SuccesArlete, ErrorAlerte, FormGroup},
+
+  computed: {
+    todos () {
+      return this.$store.state.auth;
+    }
+  },
   data:function (){
   return(
     {
+      countries:[],
       name:"",
       passWord: "",
       email:"",
@@ -112,14 +132,38 @@ name: "register",
       firstName: "",
       confirmpassWord:"",
       displayError:"",
-      successmessage:""
+      successmessage:"",
+      isAdmin:false
 
     }
   )
   },
+  mounted() {
+  fetch("/api/countries",{
+    method:"GET",
+    headers:{"Content-type":"Application/json"}
+  }).then(res=>res.json()).then(res=>{
+    //console.log( res )
+    this.countries = res.data
+    //console.log( data );
+  }).catch(err=>{ console.log(err)})
+  },
   methods:{
-  register:function (){
+  ClearForm(){
 
+    this.city,
+      this.country = "";
+      this.ZipCode="";
+      this.adresseFi="";
+      this.name="";
+      this.firstName="";
+      this.passWord="";
+      this.email="";
+      this.phoneNumber="";
+      this.civility="";
+      this.isAdmin="";
+  },
+  register:function (){
     let userAdress = []
     userAdress.push({
       city:this.city,
@@ -136,8 +180,9 @@ name: "register",
       adresse:userAdress,
       phoneNumber:this.phoneNumber,
       civility:this.civility,
-      isAdmin:true,
+      isAdmin:this.isAdmin,
     }
+
 
     if( !this.passWord || !this.email || !this.confirmpassWord || !this.firstName || !this.name)
     this.displayError="Veuillez renseigner les champs obligatoires"
@@ -146,7 +191,8 @@ name: "register",
           console.log(data)
           this.successmessage = "Votre compte a été créé avec succès..."
           this.errorMessage = ""
-
+          //this.$fetch();
+          this.ClearForm();
         }
       ).catch(err => {
         console.log(err)

@@ -1,4 +1,4 @@
-const stripe = require('stripe')("sk_test_51IcCDmD1iUWzSWcfrbK8fxw12XAQ9UVltpmImmF8fDVNTGJp10KXcGM5kyQSc90jEGxUxrXWyqhdVZpBdujKVuaL00xPQ3l8X1");
+const stripe = require('stripe')(process.env.STRIPE_PK);
 const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();

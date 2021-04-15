@@ -36,7 +36,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
-  serverMiddleware:['~/api/stripe-payment.js','~/api/sendinblue.js'],
+  serverMiddleware:['~/api/stripe-payment.js','~/api/sendinblue.js','~/api/stripeorder.js',
+  '~/api/country.js','~/api/send-email'],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   apollo: {
     clientConfigs: {
@@ -57,5 +58,6 @@ export default {
     SENDING_BLUE_API_KEY:process.env.SENDING_BLUE_API_KEY,
     STRIPE_PK:process.env.STRIPE_PK,
     STRIPE_PUBLIC:process.env.STRIPE_PUBLIC,
+    SENDGRID_API_KEY:process.env.SENDGRID_API_KEY
   }
 }

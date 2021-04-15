@@ -12,7 +12,6 @@
          <tbody>
           <tr class="border-b hover:bg-orange-100 bg-gray-100">
             <td class="p-3 px-5"><input type="text" placeholder="titre" v-model="product.name"></td>
-            <td class="p-3 px-5"> <textarea class="w-full h-24 p-2 bg-transparent rounded" name="description" v-model="product.description" placeholder="description de votre produit"></textarea></td>
             <td class="p-3 px-5"><input type="number" min="1" placeholder="prix hors taxe" v-model="product.price"></td>
             <td class="p-3 px-5">
               <select value="user.role" class="bg-transparent rounded-md border-2" v-model="product.categorie">
@@ -20,15 +19,23 @@
                  <option  v-for="cat in categories" v-model="cat._id" :key="cat._id" :value="cat._id">{{ cat.title}}</option>
               </select>
             </td>
-            <td class="p-3 px-5"><input type="file"  accept="image/jpeg, image/png" v-on:change="AddImage" v-bind="productImage" name="productImage(event)" required></td>
-            <td class="p-3 px-5 flex justify-end"><button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click.prevent="AddProduct">Ajouter</button></td>
+             <td class="p-3 px-5 flex justify-end"><button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" @click.prevent="AddProduct">Ajouter</button></td>
           </tr>
+          <tr>
+             <td class="p-3 px-5" colspan="5"> <textarea class="w-full h-24 p-2 bg-transparent rounded" name="description" v-model="product.description" placeholder="description de votre produit"></textarea></td>
+          </tr>
+         <tr>
+           <td class="p-3 px-5"><input type="file"  accept="image/jpeg, image/png" v-on:change="AddImage" v-bind="productImage" name="productImage(event)" required></td>
+         </tr>
+         <tr>
+           <td colspan="4">
+             <succes-arlete :successmessage="message" v-if="state"/>
+           </td>
+         </tr>
          </tbody>
        </table>
 </div>
-  <div>
-    <succes-arlete successmessage="produit mis à jour avec succès ..." v-if="state"/>
-  </div>
+
 
     <div class="px-3 py-4 flex justify-center">
         <table class="w-full text-md bg-white shadow-md rounded mb-4">
@@ -49,6 +56,7 @@
                     <td class="p-3 px-5"><img class="bg-transparent h-10" :src="product.imgurl.url"></td>
                     <td class="p-3 px-5">
                         <select value="user.role" class="bg-transparent border rounded-md">
+                          <option>{{product.categorie.title}}</option>
                             <option value="user" v-for="cat in categories"
                                      :key="cat._id"
                                      :value="cat._id">{{ cat.title}}
@@ -78,7 +86,8 @@ export default {
       errormessage:"",
       products:[],
       productImage:"",
-      state:false
+      state:false,
+      message:""
     }
   },
   methods:{
@@ -121,6 +130,7 @@ export default {
        this.$productupdate(product._id,productToupdate,token).then(res=>res.json()).then(data=>{
          //console.log( data );
          this.state =true;
+         this.message="produit mis à jour avec succès ..."
        }).catch(err=>{
          console.log( err );
        })

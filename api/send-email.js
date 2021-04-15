@@ -6,8 +6,8 @@ app.use( bodyParser.json())
 
 app.post('/',(req,res)=>{
   const msg ={
-    to:"pollajoel2017@gmail.com",
-    from:req.body.email,
+    to:req.body.email,
+    from:"pollajoel2017@gmail.com",
     subject:`${req.body.subject} from ${req.body.firstName}`,
     text:req.body.message,
   }
@@ -24,7 +24,7 @@ app.post('/',(req,res)=>{
 
 })
 
-module.exports = {
-  path:'/api/sendEmail',
-  handler:app
-}
+  module.exports = {
+    path:'/api/sendEmail',
+    handler:app
+  }

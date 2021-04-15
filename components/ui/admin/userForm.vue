@@ -99,7 +99,7 @@
                                 <button class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3" type="submit" @click.prevent="submitdata">Enregister les modifications</button>
                             </div>
                           <div>
-                            <succes-arlete successmessage="informations utilisateurs mis à jours..." v-show="state"/>
+                            <SuccesArlete successmessage="informations utilisateurs mis à jours..." v-show="state"/>
                           </div>
                         </div>
                     </div>
@@ -117,18 +117,7 @@ name: "userForm",
   components: {SuccesArlete},
   middleware:"auth",
   props:{
-  user:{
-    name :{type:String,},
-    email:{type:String},
-    firstName:{type:String},
-    passWord:{type:String},
-    adresse:[
-      { city: { type:String,},
-        country:{ type:String},
-        ZipCode:{ type:String},
-        adressei:{type:String}
-      }]
-  }
+  user:{}
 },
   data:function (){
   return{
@@ -145,6 +134,8 @@ name: "userForm",
   },
     submitdata(){
     this.state=false;
+    //console.log( this.user )
+
     let userAdress = []
       userAdress.push({
         city:this.user.city,
@@ -161,16 +152,15 @@ name: "userForm",
         adresse:this.userAdress,
         phoneNumber:this.user.phoneNumber,
         civility:this.user.civility,
-        isAdmin:true,
+        isAdmin:this.user.isAdmin,
       }
 
       let token = localStorage.getItem("token")
-      this.$updateuser(this.user._id,body,token).then(res=>res.json()).then(data=>{
+      this.$updateuser(this.user._id,this.user,token).then(res=>res.json()).then(data=>{
         console.log( data )
         //this.email = data.res.email;
         if( data )
           this.state = data.status;
-        //this.$fetch();
       }).catch(err=>{
         console.log( err );
       })

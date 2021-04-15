@@ -61,7 +61,7 @@ export default {
   },
   methods:{
      sendingBlue:function(){
-       alert( this.email );
+       ///alert( this.email );
       var myHeaders = new Headers();
       myHeaders.append("api-key", process.env.SENDING_BLUE_API_KEY);
       myHeaders.append("Content-Type", "application/json");

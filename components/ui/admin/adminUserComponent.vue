@@ -100,17 +100,17 @@ name: "adminUserComponent",
     edit:function (user){
     this.editState = true;
     this.user =user;
+    //console.log( user)
     },
     deleted:function (userInput){
 
-      console.log( userInput )
+      //console.log( userInput )
       const token = localStorage.getItem("token")
-      console.log( userInput._id)
+      //console.log( userInput._id)
       const usertodelete={_id:userInput._id}
 
       this.$deleteUser(usertodelete,token).then(res=>res.json()).then(data=>{
-        //this.successmessage = data.status
-         console.log( data )
+
         this.Users = this.Users.filter( elt =>elt!=userInput)
         this.successmessage=`utilisateur supprimé...`
       }).catch( err=>{
@@ -120,7 +120,7 @@ name: "adminUserComponent",
     ///console.log(cat)
     }
   },
-  fetch(){
+  mounted(){
       let token = localStorage.getItem("token")
      this.$getUsers(token).then(res => res.json()).then((data)=>{
        this.Users = data.data

@@ -54,17 +54,78 @@
               </tr>
               </tbody>
             </table>
-            <hr class="pb-6 mt-6">
-            <div class="my-4 mt-6 -mx-2 lg:flex">
+
+            <div class="my-4 mt-6 -mx-2 lg:flex" v-show="$store.state.auth===false">
               <div class="lg:px-2 lg:w-1/2">
                 <div class="p-4 bg-gray-100 rounded-full">
-                  <h1 class="ml-2 font-bold uppercase">vos données personnelles</h1>
+                  <h1 class="ml-2 font-bold uppercase"><NuxtLink to="login">Déjà client? vous connecter</NuxtLink></h1>
                 </div>
-          <div class="p-4">
-            <p class="mb-4 italic">If you have some information for the seller you can leave them in the box below</p>
-            <textarea class="w-full h-24 p-2 bg-gray-100 rounded"></textarea>
-          </div>
-        </div>
+              </div>
+              <div class="lg:px-2 lg:w-1/2">
+                <div class="p-4 bg-gray-100 rounded-full">
+                  <h1 class="ml-2 font-bold uppercase"><nuxt-link to="register">Créer un compte?</nuxt-link></h1>
+                </div>
+              </div>
+            </div>
+
+
+            <error-alerte :errormessage="user.errormessage" v-if="user.errormessage"/>
+            <hr class="pb-6 mt-6">
+            <div class="my-4 mt-6 -mx-2 lg:flex" v-show="$store.state.auth">
+              <div class="lg:px-2 lg:w-1/2">
+                <div class="p-4 bg-gray-100 rounded-full">
+                  <h1 class="ml-2 font-bold uppercase">Adresse de facturation</h1>
+                </div>
+
+                <div class="form__group">
+                  <div>
+                    <p class="mb-4 italic">Nom(*)</p>
+                    <input v-model="user.name" type="text" name="nom" class="w-full h-8 p-2 bg-gray-100 rounded"  required>
+                  </div>
+                  <div>
+                    <p class="mb-4 italic">Prenom(*)</p>
+                    <input type="text" v-model="user.firstName" name="prenom" class="w-full h-8 p-2 bg-gray-100 rounded" required>
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <div>
+                    <p class="mb-4 italic">Tel(*)</p>
+                    <input type="text" v-model="user.phoneNumber" name="phoneNumber" class="w-full h-8 p-2 bg-gray-100 rounded" required>
+                  </div>
+                  <div>
+                    <p class="mb-4 italic">Email(*)</p>
+                    <input type="text" v-model="user.email" name="email" class="w-full h-8 p-2 bg-gray-100 rounded" required>
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <div>
+                    <p class="mb-4 italic">Code postal</p>
+                    <input v-model="user.ZipCode" type="text" name="ZipCode" class="w-full h-8 p-2 bg-gray-100 rounded">
+                  </div>
+                  <div class="form__group">
+                    <p class="mb-4 italic">Adresse(*)</p>
+                    <input v-model="user.adresse" type="text" name="adresse" class="w-full h-8 p-2 bg-gray-100 rounded">
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <div>
+                    <p class="mb-4 italic">ville</p>
+                    <input v-model="user.city" type="text" name="city" class="w-full h-8 p-2 bg-gray-100 rounded">
+                  </div>
+                  <div>
+                    <p class="mb-4 italic">Pays</p>
+                    <input type="text" v-model="user.country" name="nom" class="w-full h-8 p-2 bg-gray-100 rounded">
+                  </div>
+                </div>
+
+                <div class="p-4">
+                  <p class="mb-4 italic">Si vous avez des informations pour le vendeur, vous pouvez les laisser dans la case ci-dessous</p>
+                  <textarea class="w-full h-24 p-2 bg-gray-100 rounded" name="suggestions"></textarea>
+                </div>
+              </div>
         <div class="lg:px-2 lg:w-1/2">
           <div class="p-4 bg-gray-100 rounded-full">
             <h1 class="ml-2 font-bold uppercase">Details de la Commande</h1>
@@ -141,18 +202,47 @@
   </div>
 </div>
     </div>
+   <div class="-m-2 text-center my-20" v-else>
+  <div class="p-2">
+    <div class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
+      <span class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center">état du panier</span>
+      <span class="inline-flex px-2">Votre Panier panier est vide................</span>
+    </div>
+  </div>
+   </div>
+
 </template>
 
 <script>
 import Stripe from 'stripe';
 import {loadStripe } from "@stripe/stripe-js"
+import Index from "@/pages/index";
+import ErrorAlerte from "@/components/ui/errorAlerte";
 export default {
 name: "productCart",
+  components: {ErrorAlerte, Index},
 
 
   data:function (){
 
   return{
+    user:{
+      name:"",
+      passWord: "",
+      email:"",
+      adresse: "",
+      phoneNumber: "",
+      civility:"",
+      adresseFi:"",
+      country:"",
+      city:"",
+      ZipCode:"",
+      firstName:"",
+      confirmpassWord:"xxxxxxxx",
+      displayError:"",
+      errormessage:"",
+      isAdmin:false
+    },
     pk :process.env.STRIPE_PK,
     products:[],
     Total:0,
@@ -170,6 +260,19 @@ name: "productCart",
   }
   },
   mounted() {
+  this.user ={name:this.$store.state.name,
+      email:this.$store.state.email,
+      adresse:this.$store.state.adresseFi,
+      phoneNumber:this.$store.state.phone,
+      civility:"",
+      adresseFi:this.$store.state.adresseFi,
+      country:this.$store.state.country,
+      city:this.$store.state.city,
+      ZipCode:this.$store.state.ZipCode,
+      firstName:this.$store.state.firstName,
+
+  }
+
    if(JSON.parse(localStorage.getItem("cart"))){
     this.products = JSON.parse(localStorage.getItem("cart"));
     this.products.forEach(prod => {
@@ -197,6 +300,56 @@ name: "productCart",
         //console.error(error);
       });
     })
+    },
+    AddOrder(){
+
+      const ordersvar = []
+      this.products.forEach(prod=>{ ordersvar.push(prod.product)});
+      const Order = {
+        totalAmount:this.Total,
+        user:this.$store.state._id,
+        products:ordersvar,
+         status:"En cours"
+        }
+
+      let token = localStorage.getItem("token");
+      this.$orderAdd(Order,token).then(res=>res.json()).then(res=>{
+        //console.log( res )
+        localStorage.removeItem("cart")
+      }).catch(err=>{ console.log( err )})
+    },
+    createdUser(){
+      let userAdress = []
+    userAdress.push({
+      city:this.user.city,
+      country:this.user.country,
+      ZipCode:this.user.ZipCode,
+      adressei:this.user.adresseFi
+    })
+    const body={
+        name:this.name,
+      firstName:this.user.firstName,
+      passWord:this.user.passWord,
+      email:this.user.email,
+      adresse:this.useruserAdress,
+      phoneNumber:this.user.phoneNumber,
+      civility:this.user.civility,
+      isAdmin:this.user.isAdmin,
+    }
+
+
+    this.$register(body).then(res => res.json()).then(data => {
+          //console.log(data)
+          this.user.errormessage = data.message;
+          //this.successmessage = "Votre compte a été créé avec succès..."
+          //this.errorMessage = ""
+
+        }
+      ).catch(err => {
+        console.log(err)
+      })
+
+
 
 
     },
@@ -205,9 +358,7 @@ name: "productCart",
       //this.$refs.checkoutRef.redirectT
       var pk = process.env.STRIPE_PUBLIC
       var stripe = Stripe(pk);
-
-       const data2 = { "email":"pollajoel2017@gmail.com","price":this.Total*100};
-
+       const data2 = { "email":this.email,"price":this.Total*100};
       fetch("/api/stripePay", {
          method: "POST",
          headers: {"Content-type":"Application/json"},
@@ -215,16 +366,11 @@ name: "productCart",
        }).then(response=> {
          return response.json();
        }).then(session=> {
-
+          console.log( session )
+        this.AddOrder();
          if( session )
            this.setsession(session)
-
        }).catch(err=>{console.log( err )})
-
-
-
-
-
     },
   SetQte:function (event){
    this.Total=0;

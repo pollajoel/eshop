@@ -39,12 +39,14 @@
             </div>
           </div>
 </div>
-    <div class="w-full flex flex-wrap ml-12 pb-10 pt-10 justify-left" v-else>
-       <div class="bg-red-100 border border-red-400 text-red-700 px-10 py-10 rounded relative mb-2" role="alert">
-         <h1> Pas de produits dans cette catégorie...</h1>
-       </div>
+  <div class="-m-2 text-center my-20" v-else>
+  <div class="p-2">
+    <div class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
+      <span class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center">status</span>
+      <span class="inline-flex px-2">Cette catégorie ne contient aucun produits</span>
     </div>
-
+  </div>
+   </div>
     </div>
 </template>
 

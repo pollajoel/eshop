@@ -118,7 +118,7 @@ export default ({ app }, inject) => {
        return fetch(`${process.env.API_URL}/user/${id}`,{
          headers:{
            "Content-type":"Application/json",
-            "Authorization":token
+           // "Authorization":token
          },
          method:"PUT",
          body:JSON.stringify(user)
@@ -136,6 +136,42 @@ export default ({ app }, inject) => {
      }),
      inject('findProductBy',(description,name)=>{
        return fetch(`${process.env.API_URL}/product/findall?description=${description}&name=${name}`,{
+          headers: {
+             "Content-type":"Application/json"
+          }
+       })
+     }),
+     inject('orderAdd',(order,token)=>{
+       return fetch(`${process.env.API_URL}/addOrder`,{
+         headers:{
+           "Content-type":"Application/json",
+            "Authorization":token
+         },
+         method:"POST",
+         body:JSON.stringify(order)
+       })
+     }),
+     inject('orders',(token)=>{
+       return fetch(`${process.env.API_URL}/allOrder`,{
+         headers: {
+           "Content-type":"Application/json",
+           "Authorization":token
+          },
+         method:"GET",
+       })
+     }),
+     inject('orderUpdate',(id,order,token)=>{
+       return fetch(`${process.env.API_URL}/Orderupdate/${id}`,{
+         headers:{
+           "Content-type":"Application/json",
+            "Authorization":token
+         },
+         method:"PUT",
+         body:JSON.stringify(order)
+       })
+     }),
+     inject('Userfind',(email)=>{
+       return fetch(`${process.env.API_URL}/userfind?email=${email}`,{
           headers: {
              "Content-type":"Application/json"
           }

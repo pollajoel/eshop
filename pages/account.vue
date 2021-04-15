@@ -59,19 +59,33 @@
                             </div>
                             <div class="flex flex-col text-left w-3/6 px-2">
                                 <label class="mb-1 mb-1 text-sm font-medium text-gray-700" for="height-feet">pays</label>
-                                <input type="text" class="h-8 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" name ="country" v-model="country"/>
-                            </div>
+                              <select class="h-8 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" v-model="country">
+                                <option> {{ country}}</option>
+                                <option value=""> Selectionner un Pays</option>
+                                <option v-for="ctr in countries"
+                                        :key="ctr.name"
+                                        :value="ctr.name"
+                                >{{ ctr.name}}</option>
+                              </select>
+                               </div>
+
                         </div>
+
+
+
+
 
                       <div class="flex items-center justify-between mb-5">
                             <div class="flex flex-col text-left w-3/6 px-2">
                                 <label class="mb-1 mb-1 text-sm font-medium text-gray-700">Mot de passe</label>
                                 <input type="password" class="h-8 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600" name="passWord" v-model="passWord" />
                             </div>
+                        <!--
                             <div class="flex flex-col text-left w-3/6 px-2">
                                 <label class="mb-1 mb-1 text-sm font-medium text-gray-700" for="height-feet">Confirmaton de mot de passe</label>
                                 <input type="password" class="h-8 border-2 rounded-sm focus:outline-none text-gray-600 focus:text-gray-600"  v-model="confirmpassWord" name="confirmpassWord"/>
                             </div>
+                            -->
                         </div>
 
                         <div class="flex items-center justify-center mt-3">
@@ -114,6 +128,7 @@ export default {
       civility:"",
       adresseFi:"",
       country:"",
+       countries:[],
       city:"",
       ZipCode:"",
       firstName: "",
@@ -143,7 +158,7 @@ export default {
         adresse:userAdress,
         phoneNumber:this.phoneNumber,
         civility:this.civility,
-        isAdmin:true,
+        isAdmin:this.$store.state.isAdmin
       }
 
       let token = localStorage.getItem("token")
@@ -160,34 +175,53 @@ export default {
     }
   },
   mounted() {
+
+    fetch("/api/countries",{
+    method:"GET",
+    headers:{"Content-type":"Application/json"}
+  }).then(res=>res.json()).then(res=>{
+    //console.log( res )
+    this.countries = res.data
+    //console.log( data );
+  }).catch(err=>{ console.log(err)})
+
+
     const token = localStorage.getItem("token")
     if( token ) {
       const jwtDecoded = this.$decodeJwt(token);
-      console.log( jwtDecoded );
+
+      //console.log( jwtDecoded )
+      //console.log( jwtDecoded );
+
       this.$getMe(jwtDecoded.id, token)
         .then(res=>res.json()).then((data)=>{
-          this.$store.commit('isAuth')
-          this.$store.commit('setUserName',data.name)
-          this.user = data;
-          this.city = data.adresse[0].city;
-          this.country = data.adresse[0].country;
-          this.ZipCode = data.adresse[0].ZipCode;
-          this.adresseFi = data.adresse[0].adressei;
-          this.isLogged = true;
-          localStorage.setItem("name",data.name)
-
-         this.passWord = data.passWord;
-         this.firstName = data.firstName;
-         this.name= data.name;
-         this.confirmpassWord = data.passWord;
-         this.email= data.email;
-         this.phoneNumber = data.phoneNumber;
-         this.userId = data._id;
-
-
-
-
-
+        this.$store.commit('setIsadmin',data.isAdmin)
+        this.$store.commit('isAuth')
+        this.$store.commit('setUserName',data.name)
+        this.user = data;
+        //store user data in store to be acces by all users ...
+        this.city = data.adresse[0].city;
+        this.$store.commit("setUserCity",data.adresse[0].city)
+        this.country = data.adresse[0].country;
+        this.$store.commit("SetCountry",data.adresse[0].country);
+        this.ZipCode = data.adresse[0].ZipCode;
+        this.$store.commit("SetZipcode",data.adresse[0].ZipCode);
+        this.adresseFi = data.adresse[0].adressei;
+        this.$store.commit("SetadresseFi",data.adresse[0].adressei);
+        this.$store.commit("setID",data._id);
+        this.isLogged = true;
+        localStorage.setItem("name",data.name)
+        this.passWord = data.passWord;
+        this.firstName = data.firstName;
+        this.$store.commit("SetFirsName",data.firstName);
+        this.name= data.name;
+        this.$store.commit("SetName",data.name);
+        this.confirmpassWord = data.passWord;
+        this.email= data.email;
+        this.$store.commit("Setemail",data.email);
+        this.phoneNumber = data.phoneNumber;
+        this.$store.commit("Setphone",data.phoneNumber);
+        this.userId = data._id;
       }).catch(err=>{
         console.log( err )
       })

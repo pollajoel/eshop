@@ -1,6 +1,6 @@
 <template>
 <!-- component -->
-  <div v-show="products.length>0 && products" :key="componentKey">
+  <div v-if="products.length>0 && products" :key="componentKey">
 <div class="flex justify-center my-6">
   <div class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
     <div class="flex-1">
@@ -131,6 +131,16 @@
   </div>
 </div>
     </div>
+
+   <div class="-m-2 text-center my-20" v-else>
+  <div class="p-2">
+    <div class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
+      <span class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center">état de la liste</span>
+      <span class="inline-flex px-2">Votre liste de favoris est vide................</span>
+    </div>
+  </div>
+   </div>
+
 </template>
 
 <script>

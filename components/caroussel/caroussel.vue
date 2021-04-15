@@ -1,10 +1,12 @@
 <template>
   <div>
     <slot></slot>
+    <!--
     <div class="nav__bouton">
       <button class="caroussel__nav carousel__next" @click="next">suiv</button>
       <button class="caroussel__nav carousel__previous" @click="previous">préc</button>
     </div>
+    -->
   </div>
 </template>
 
